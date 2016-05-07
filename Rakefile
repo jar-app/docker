@@ -8,6 +8,5 @@ end
 
 task :setup => [:build] do
   # Database set-up
-  sh "docker-compose run #{UserService} bundle exec rake db:create"
-  sh "docker-compose run #{UserService} bundle exec rake db:migrate"
+  sh "docker-compose run #{UserService} bundle exec rake db:create db:migrate"
 end
