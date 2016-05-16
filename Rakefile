@@ -7,10 +7,18 @@ Services = [] << UserService
 
 task :setup => [:build] do
   # Database set-up
-  sh "docker-compose run #{UserService} bundle exec rake db:create db:migrate"
+  while true
+    begin
+      sh "docker-compose run #{UserService} bundle exec rake db:create db:migrate"
+    rescue
+      sleep 1
+    else
+      break
+    end
+  end
 end
 
-task :start => [:clean] do
+task :start => [:clean, :setup] do
   sh 'docker-compose up --abort-on-container-exit'
 end
 
