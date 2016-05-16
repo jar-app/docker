@@ -18,7 +18,11 @@ task :setup => [:build] do
   end
 end
 
-task :start => [:clean, :setup] do
+task :clean_start => [:clean, :setup] do
+  Rake::Task["start"].invoke
+end
+
+task :start do
   sh 'docker-compose up --abort-on-container-exit'
 end
 
