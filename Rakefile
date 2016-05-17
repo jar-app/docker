@@ -23,7 +23,7 @@ task :clean_start => [:clean, :setup] do
 end
 
 task :start do
-  sh 'docker-compose up --abort-on-container-exit'
+  sh 'docker-compose up'
 end
 
 task :build => [:clean] do

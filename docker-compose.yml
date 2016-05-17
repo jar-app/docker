@@ -7,10 +7,13 @@ services:
     command: nginx
     ports:
       - 80:80
+    volumes_from:
+      - jarjs:ro
     links:
       - user_service
     depends_on:
       - user_service
+      - jarjs
   user_service:
     build: ./user_service
     command: rails server --binding 0.0.0.0 --port 3000
@@ -22,3 +25,8 @@ services:
       - db
     depends_on:
       - db
+  jarjs:
+    build: ./jarjs
+    command: /bin/true
+    volumes:
+      - ./jarjs:/usr/src/app
