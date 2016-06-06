@@ -7,6 +7,8 @@ services:
     command: nginx
     ports:
       - 80:80
+    volumes:
+      - ./nginx/log:/var/log/nginx
     volumes_from:
       - jarjs:ro
     links:
