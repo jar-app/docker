@@ -1,0 +1,17 @@
+version: '2'
+services:
+  web_server:
+    ports:
+      - 8080:8080
+    links:
+      - jarjs
+    depends_on:
+      - jarjs
+  jarjs:
+    expose:
+      - 1994
+    ports:
+      - 1994:1994
+    volumes:
+      - ./jarjs:/usr/src/app
+    command: webpack-dev-server --inline --hot --content-base bootstrap/ --config webpack.config.js --host 0.0.0.0 --port 1994 --progress --colors

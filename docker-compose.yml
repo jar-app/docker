@@ -1,8 +1,19 @@
 version: '2'
 services:
-  db:
-    image: postgres:9.5
-  nginx:
+  # user_service_db:
+  #   extends:
+  #     file: ./user_service/docker-compose.yml
+  #     service: db
+  # user_service:
+  #   extends:
+  #     file: ./user_service/docker-compose.yml
+  #     service: user_service
+  #   links:
+  #     - user_service_db:db
+  #   depends_on:
+  #     - user_service_db
+  web_server:
+    tty: true
     build: ./nginx
     command: nginx
     ports:
@@ -11,24 +22,11 @@ services:
       - ./nginx/log:/var/log/nginx
     volumes_from:
       - jarjs:ro
-    links:
-      - user_service
+    # links:
+      # - user_service
     depends_on:
-      - user_service
       - jarjs
-  user_service:
-    build: ./user_service
-    command: rails server --binding 0.0.0.0 --port 3000
-    volumes:
-      - ./user_service:/usr/src/app
-    ports:
-      - 3000:3000
-    links:
-      - db
-    depends_on:
-      - db
+      # - user_service
   jarjs:
     build: ./jarjs
     command: /bin/true
-    volumes:
-      - ./jarjs:/usr/src/app
